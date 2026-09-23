@@ -10,14 +10,40 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApprovalsRouteImport } from './routes/approvals'
+import { Route as AssetsRouteImport } from './routes/assets'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as PublishingRouteImport } from './routes/publishing'
 import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as CampaignsIdRouteImport } from './routes/campaigns.$id'
 import { Route as ContentIndexRouteImport } from './routes/content.index'
 import { Route as ContentIdRouteImport } from './routes/content.$id'
+import { Route as VideosIndexRouteImport } from './routes/videos.index'
+import { Route as VideosIdRouteImport } from './routes/videos.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApprovalsRoute = ApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssetsRoute = AssetsRouteImport.update({
+  id: '/assets',
+  path: '/assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublishingRoute = PublishingRouteImport.update({
+  id: '/publishing',
+  path: '/publishing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CampaignsIndexRoute = CampaignsIndexRouteImport.update({
@@ -40,50 +66,111 @@ const ContentIdRoute = ContentIdRouteImport.update({
   path: '/content/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideosIndexRoute = VideosIndexRouteImport.update({
+  id: '/videos/',
+  path: '/videos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosIdRoute = VideosIdRouteImport.update({
+  id: '/videos/$id',
+  path: '/videos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/approvals': typeof ApprovalsRoute
+  '/assets': typeof AssetsRoute
+  '/calendar': typeof CalendarRoute
+  '/publishing': typeof PublishingRoute
   '/campaigns/$id': typeof CampaignsIdRoute
   '/content/$id': typeof ContentIdRoute
+  '/videos/$id': typeof VideosIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/content/': typeof ContentIndexRoute
+  '/videos/': typeof VideosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/approvals': typeof ApprovalsRoute
+  '/assets': typeof AssetsRoute
+  '/calendar': typeof CalendarRoute
+  '/publishing': typeof PublishingRoute
   '/campaigns/$id': typeof CampaignsIdRoute
   '/content/$id': typeof ContentIdRoute
+  '/videos/$id': typeof VideosIdRoute
   '/campaigns': typeof CampaignsIndexRoute
   '/content': typeof ContentIndexRoute
+  '/videos': typeof VideosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/approvals': typeof ApprovalsRoute
+  '/assets': typeof AssetsRoute
+  '/calendar': typeof CalendarRoute
+  '/publishing': typeof PublishingRoute
   '/campaigns/$id': typeof CampaignsIdRoute
   '/content/$id': typeof ContentIdRoute
+  '/videos/$id': typeof VideosIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/content/': typeof ContentIndexRoute
+  '/videos/': typeof VideosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/campaigns/$id' | '/content/$id' | '/campaigns/' | '/content/'
+    | '/'
+    | '/approvals'
+    | '/assets'
+    | '/calendar'
+    | '/publishing'
+    | '/campaigns/$id'
+    | '/content/$id'
+    | '/videos/$id'
+    | '/campaigns/'
+    | '/content/'
+    | '/videos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/campaigns/$id' | '/content/$id' | '/campaigns' | '/content'
+  to:
+    | '/'
+    | '/approvals'
+    | '/assets'
+    | '/calendar'
+    | '/publishing'
+    | '/campaigns/$id'
+    | '/content/$id'
+    | '/videos/$id'
+    | '/campaigns'
+    | '/content'
+    | '/videos'
   id:
     | '__root__'
     | '/'
+    | '/approvals'
+    | '/assets'
+    | '/calendar'
+    | '/publishing'
     | '/campaigns/$id'
     | '/content/$id'
+    | '/videos/$id'
     | '/campaigns/'
     | '/content/'
+    | '/videos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApprovalsRoute: typeof ApprovalsRoute
+  AssetsRoute: typeof AssetsRoute
+  CalendarRoute: typeof CalendarRoute
+  PublishingRoute: typeof PublishingRoute
   CampaignsIdRoute: typeof CampaignsIdRoute
   ContentIdRoute: typeof ContentIdRoute
+  VideosIdRoute: typeof VideosIdRoute
   CampaignsIndexRoute: typeof CampaignsIndexRoute
   ContentIndexRoute: typeof ContentIndexRoute
+  VideosIndexRoute: typeof VideosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -93,6 +180,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/approvals': {
+      id: '/approvals'
+      path: '/approvals'
+      fullPath: '/approvals'
+      preLoaderRoute: typeof ApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assets': {
+      id: '/assets'
+      path: '/assets'
+      fullPath: '/assets'
+      preLoaderRoute: typeof AssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publishing': {
+      id: '/publishing'
+      path: '/publishing'
+      fullPath: '/publishing'
+      preLoaderRoute: typeof PublishingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/campaigns/': {
@@ -123,15 +238,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContentIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/videos/': {
+      id: '/videos/'
+      path: '/videos'
+      fullPath: '/videos/'
+      preLoaderRoute: typeof VideosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos/$id': {
+      id: '/videos/$id'
+      path: '/videos/$id'
+      fullPath: '/videos/$id'
+      preLoaderRoute: typeof VideosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApprovalsRoute: ApprovalsRoute,
+  AssetsRoute: AssetsRoute,
+  CalendarRoute: CalendarRoute,
+  PublishingRoute: PublishingRoute,
   CampaignsIdRoute: CampaignsIdRoute,
   ContentIdRoute: ContentIdRoute,
+  VideosIdRoute: VideosIdRoute,
   CampaignsIndexRoute: CampaignsIndexRoute,
   ContentIndexRoute: ContentIndexRoute,
+  VideosIndexRoute: VideosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
