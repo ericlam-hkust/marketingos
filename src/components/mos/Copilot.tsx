@@ -39,7 +39,9 @@ export function CopilotPanel() {
   const [msgs, setMsgs] = useState<Msg[]>(seed);
   const [input, setInput] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
-  useEffect(() => endRef.current?.scrollIntoView({ behavior: "smooth" }), [msgs]);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [msgs]);
 
   const send = (text: string) => {
     if (!text.trim()) return;
