@@ -1,62 +1,48 @@
-# Tonric MarketingOS — Implementation Plan
+# Tonric MarketingOS — Mock-up Plan
 
-An AI-powered marketing operations platform: campaign planning, content creation, human approval, publishing, leads and analytics — with a persistent Marketing Copilot. Traditional Chinese (Hong Kong) first, with English and Simplified Chinese.
+A clickable, high-polish mock-up of the AI marketing operations platform to nail the look and feel. Everything runs on realistic Hong Kong demo data (Traditional Chinese first, English and Simplified Chinese switchable). No sign-in, database or live AI yet — those come after the design is approved.
 
-Confirmed with you: real backend from day one, priority modules first, all three languages working.
+## Step 0 — Pick a visual direction
 
-## Phase 1 — Foundation
+Before building, I will generate three rendered design directions for you to choose from (e.g. calm editorial, bold command-centre, soft premium). Each keeps the spec's professional B2B restraint but pushes for a distinctive, attractive feel rather than a generic dashboard. Your pick sets colours, typography and mood for the whole app.
 
-- Turn on Lovable Cloud (accounts, database, file storage, server-side AI).
-- Sign-up / sign-in, plus a profile with display name, language, timezone, theme.
-- Organisation + multi-brand data model; switching brand re-scopes everything on screen.
-- Ten roles (platform admin, brand admin, marketing director, campaign manager, content marketer, designer, analyst, approver, sales user, client viewer) stored in a dedicated roles table; menu items and action buttons appear only for permitted roles.
-- Seeded demo organisation with realistic Hong Kong SME marketing data in Traditional Chinese, so every screen is populated on first login.
+## Step 1 — Design system and shell
 
-## Phase 2 — Design system and shell
+- Light + dark themes, one signature accent, soft layered surfaces, subtle gradients and glows for AI moments, crisp status pills, line icons.
+- CJK-friendly typography (distinctive heading face + Noto Sans TC), generous spacing.
+- Tasteful motion: smooth panel slides, card hover lift, skeleton shimmer, streaming-text effect in Copilot.
+- Collapsible sidebar with all 14 modules; top bar with brand switcher, search (command palette style), notification bell, language switcher (繁中 / EN / 简中), theme toggle, user menu with a role switcher so you can preview what each role sees.
+- Marketing Copilot panel on every page, expandable to full-screen command centre.
 
-- Neutral zinc palette with one restrained accent, light + dark themes, 8px spacing, rounded cards with hairline borders, status pills, line icons.
-- Inter + Noto Sans TC typography, 14px base, CJK-friendly.
-- Collapsible left sidebar: Dashboard, Campaigns, Content Studio, Asset Library, Videos, Approvals, Calendar, Leads, Integrations, Publishing, Jobs, Audit Log, AI Models, Brand Hub.
-- Top bar: organisation + brand selector, global search, notification bell with unread count, language switcher (繁中 / EN / 简中), theme toggle, user menu.
-- Right-side Copilot panel on every page, collapsible and expandable to full screen.
-- Three-language translation layer covering all interface labels; sample content is authored zh-HK with linked English adaptations.
-- Loading skeletons and friendly dashed empty states as shared building blocks.
+## Step 2 — Priority screens (richest detail)
 
-## Phase 3 — Priority modules
+- **Dashboard** — hero greeting with today's priorities, campaign health cards with KPI rings, approval inbox, publishing queue with a failed-post alert, production pipeline, lead funnel chart, performance charts with data-freshness stamps, AI recommendation cards with "why" text.
+- **Campaigns** — card/table list with filters; animated 5-step creation wizard ending in a simulated AI-generated plan; campaign workspace with all 8 tabs (Overview, Strategy, Content, Creatives, Calendar, Leads, Analytics, Activity).
+- **Content Studio** — filterable list; editor with zh-HK original beside the linked English adaptation, version history and compare, comments, AI action toolbar (simulated new versions), inline advisory checks, and the status workflow bar.
+- **Marketing Copilot** — context chips header, scripted conversations answering with artefact cards (content options A/B/C, proposed calendar, campaign draft), Ask/Draft/Propose/Execute mode badges, seeded example prompts.
+- **Confirmation card** — the signature safety modal with full preview (copy, asset, native channel preview, account, HKT time, approval + UTM checks) and Confirm / Edit / Cancel.
 
-**Dashboard** — campaign health, approval inbox, publishing queue, production status by stage, lead funnel, performance summary with data-freshness stamps, AI recommendation cards that explain their reasoning. Each widget links into its module.
+## Step 3 — Workflow screens
 
-**Campaigns** — filterable list; 5-step creation wizard (objective, audience, offer & message, channels, AI-generated editable plan); campaign workspace with Overview, Strategy, Content, Creatives, Calendar, Leads, Analytics and Activity tabs.
+- Approvals: pending cards with approve / request changes / reject, decision history.
+- Calendar: month / week / day with channel colours and entry popovers, confirmation-gated scheduling.
+- Publishing: items table, status timeline, failed attempt drill-down with retry.
+- Asset Library: visual grid, asset detail with version lineage and channel renditions, simulated generation job progress.
 
-**Content Studio** — list with filters; editor with zh-HK original and linked English adaptation side by side, version history recording author, model and prompt, version compare, comments and assignment, AI actions (draft, rewrite, variants, adapt) each creating a new version, automated advisory checks (channel limits, banned phrases, missing CTA), and the workflow bar driving draft → submitted → changes requested → approved → scheduled → published.
+## Step 4 — Remaining screens
 
-**Marketing Copilot** — editable context header, chat thread whose answers arrive as clickable artefact cards backed by real records, Ask / Draft / Propose / Execute mode indicator, full-screen command centre with live campaign artefacts, seeded example prompts.
+- Videos: project list, brief, scene-by-scene script, full-screen teleprompter (speed, size, mirror, spacebar), takes, edit requests, hand-off.
+- Leads: list with consent badges, lead detail with status stepper and timeline, AI outreach drafts needing approval.
+- Brand Hub: brand cards with colour swatches, "brand DNA" editor.
+- Integrations, AI Models, Notifications, Jobs, Audit Log (with "verify chain" animation), Profile.
 
-**Confirmation cards** — the shared safety component gating every consequential action, showing full preview (copy, asset version, channel preview, account, timezone, approval and UTM state) with Confirm / Edit / Cancel.
-
-## Phase 4 — Workflow modules
-
-- Approvals: pending queue and decision history, approve / request changes / reject with notes, brand filter, requester notifications.
-- Calendar: month / week / day views, channel colouring, filters, entry popovers; scheduling, rescheduling and cancelling all confirmation-gated.
-- Publishing: items table with status machine, timestamps, remote and UTM links, attempt history with sanitised errors and safe retry.
-- Asset Library: asset grid, version gallery with lineage, channel renditions, async generation jobs with status polling, approval submission.
-
-## Phase 5 — Remaining modules
-
-- Videos: full presenter-video pipeline — brief, scene-by-scene script with lock and approval, full-screen teleprompter (speed, font size, mirror, spacebar), takes upload and selection, edit requests, hand-off creating a content item.
-- Leads & Outreach: list with consent enforcement, CSV import, suppression list, lead detail with state-machine transitions and audit timeline, AI outreach drafts that always require human approval — never auto-send.
-- Brand Hub: brand cards with default/archive guards; identity editor for tone, value propositions, approved and prohibited claims, banned phrases, glossary, personas; visual identity with colours and fonts. These rules feed every AI draft.
-- Integrations: provider app setup cards, channel connection cards with health, scopes and brand assignment, confirmation-gated disconnect, "coming soon" cards.
-- AI Models, Notifications, Jobs, Audit Log (hash-chained with verify action), Profile settings.
+All screens get friendly empty states and loading skeletons. Interactions (approve, schedule, generate) update the on-screen demo data during the session so the flows feel real.
 
 ## Technical notes
 
-- TanStack Start with server functions; Lovable Cloud (Postgres) with row-level security scoped by organisation and brand; roles in a separate table checked by a security-definer function.
-- AI generation runs server-side through the Lovable AI Gateway, with brand DNA injected into every prompt; long generations stream. Image generation for creative assets; async jobs recorded in the Jobs table with polling.
-- Every write records an append-only, hash-chained audit event.
-- Publishing and outreach execution are stubbed behind confirmation + approval until real channel OAuth connections are configured; the status machinery and retry idempotency are real.
-- Translations in a typed message catalogue, with the active language stored on the profile.
-
-## Out of scope for now
-
-Live posting to LinkedIn/Meta requires OAuth apps and credentials from you; until then those connections run in mock mode and posts stop at "ready to publish".
+- Separate route per module and campaign/content/video/lead detail pages, each with its own page title and description.
+- Demo data lives in typed local modules; a small in-memory store lets actions change state until refresh.
+- Typed translation catalogue for all interface labels in three languages; sample content in zh-HK with English adaptations.
+- Theme and language remembered in the browser.
+- Charts via a lightweight chart library; design tokens defined centrally for both themes.
+- Built so a real backend (accounts, database, AI Copilot) can be plugged in later without redesigning screens.
