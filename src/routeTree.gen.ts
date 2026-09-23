@@ -10,14 +10,84 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiModelsRouteImport } from './routes/ai-models'
+import { Route as ApprovalsRouteImport } from './routes/approvals'
+import { Route as AssetsRouteImport } from './routes/assets'
+import { Route as AuditRouteImport } from './routes/audit'
+import { Route as BrandsRouteImport } from './routes/brands'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as JobsRouteImport } from './routes/jobs'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PublishingRouteImport } from './routes/publishing'
 import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as CampaignsIdRouteImport } from './routes/campaigns.$id'
 import { Route as ContentIndexRouteImport } from './routes/content.index'
 import { Route as ContentIdRouteImport } from './routes/content.$id'
+import { Route as LeadsIndexRouteImport } from './routes/leads.index'
+import { Route as LeadsIdRouteImport } from './routes/leads.$id'
+import { Route as VideosIndexRouteImport } from './routes/videos.index'
+import { Route as VideosIdRouteImport } from './routes/videos.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiModelsRoute = AiModelsRouteImport.update({
+  id: '/ai-models',
+  path: '/ai-models',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApprovalsRoute = ApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssetsRoute = AssetsRouteImport.update({
+  id: '/assets',
+  path: '/assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandsRoute = BrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsRoute = JobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublishingRoute = PublishingRouteImport.update({
+  id: '/publishing',
+  path: '/publishing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CampaignsIndexRoute = CampaignsIndexRouteImport.update({
@@ -40,50 +110,184 @@ const ContentIdRoute = ContentIdRouteImport.update({
   path: '/content/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeadsIndexRoute = LeadsIndexRouteImport.update({
+  id: '/leads/',
+  path: '/leads/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeadsIdRoute = LeadsIdRouteImport.update({
+  id: '/leads/$id',
+  path: '/leads/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosIndexRoute = VideosIndexRouteImport.update({
+  id: '/videos/',
+  path: '/videos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosIdRoute = VideosIdRouteImport.update({
+  id: '/videos/$id',
+  path: '/videos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-models': typeof AiModelsRoute
+  '/approvals': typeof ApprovalsRoute
+  '/assets': typeof AssetsRoute
+  '/audit': typeof AuditRoute
+  '/brands': typeof BrandsRoute
+  '/calendar': typeof CalendarRoute
+  '/integrations': typeof IntegrationsRoute
+  '/jobs': typeof JobsRoute
+  '/notifications': typeof NotificationsRoute
+  '/profile': typeof ProfileRoute
+  '/publishing': typeof PublishingRoute
   '/campaigns/$id': typeof CampaignsIdRoute
   '/content/$id': typeof ContentIdRoute
+  '/leads/$id': typeof LeadsIdRoute
+  '/videos/$id': typeof VideosIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/content/': typeof ContentIndexRoute
+  '/leads/': typeof LeadsIndexRoute
+  '/videos/': typeof VideosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-models': typeof AiModelsRoute
+  '/approvals': typeof ApprovalsRoute
+  '/assets': typeof AssetsRoute
+  '/audit': typeof AuditRoute
+  '/brands': typeof BrandsRoute
+  '/calendar': typeof CalendarRoute
+  '/integrations': typeof IntegrationsRoute
+  '/jobs': typeof JobsRoute
+  '/notifications': typeof NotificationsRoute
+  '/profile': typeof ProfileRoute
+  '/publishing': typeof PublishingRoute
   '/campaigns/$id': typeof CampaignsIdRoute
   '/content/$id': typeof ContentIdRoute
+  '/leads/$id': typeof LeadsIdRoute
+  '/videos/$id': typeof VideosIdRoute
   '/campaigns': typeof CampaignsIndexRoute
   '/content': typeof ContentIndexRoute
+  '/leads': typeof LeadsIndexRoute
+  '/videos': typeof VideosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-models': typeof AiModelsRoute
+  '/approvals': typeof ApprovalsRoute
+  '/assets': typeof AssetsRoute
+  '/audit': typeof AuditRoute
+  '/brands': typeof BrandsRoute
+  '/calendar': typeof CalendarRoute
+  '/integrations': typeof IntegrationsRoute
+  '/jobs': typeof JobsRoute
+  '/notifications': typeof NotificationsRoute
+  '/profile': typeof ProfileRoute
+  '/publishing': typeof PublishingRoute
   '/campaigns/$id': typeof CampaignsIdRoute
   '/content/$id': typeof ContentIdRoute
+  '/leads/$id': typeof LeadsIdRoute
+  '/videos/$id': typeof VideosIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/content/': typeof ContentIndexRoute
+  '/leads/': typeof LeadsIndexRoute
+  '/videos/': typeof VideosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/campaigns/$id' | '/content/$id' | '/campaigns/' | '/content/'
+    | '/'
+    | '/ai-models'
+    | '/approvals'
+    | '/assets'
+    | '/audit'
+    | '/brands'
+    | '/calendar'
+    | '/integrations'
+    | '/jobs'
+    | '/notifications'
+    | '/profile'
+    | '/publishing'
+    | '/campaigns/$id'
+    | '/content/$id'
+    | '/leads/$id'
+    | '/videos/$id'
+    | '/campaigns/'
+    | '/content/'
+    | '/leads/'
+    | '/videos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/campaigns/$id' | '/content/$id' | '/campaigns' | '/content'
+  to:
+    | '/'
+    | '/ai-models'
+    | '/approvals'
+    | '/assets'
+    | '/audit'
+    | '/brands'
+    | '/calendar'
+    | '/integrations'
+    | '/jobs'
+    | '/notifications'
+    | '/profile'
+    | '/publishing'
+    | '/campaigns/$id'
+    | '/content/$id'
+    | '/leads/$id'
+    | '/videos/$id'
+    | '/campaigns'
+    | '/content'
+    | '/leads'
+    | '/videos'
   id:
     | '__root__'
     | '/'
+    | '/ai-models'
+    | '/approvals'
+    | '/assets'
+    | '/audit'
+    | '/brands'
+    | '/calendar'
+    | '/integrations'
+    | '/jobs'
+    | '/notifications'
+    | '/profile'
+    | '/publishing'
     | '/campaigns/$id'
     | '/content/$id'
+    | '/leads/$id'
+    | '/videos/$id'
     | '/campaigns/'
     | '/content/'
+    | '/leads/'
+    | '/videos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiModelsRoute: typeof AiModelsRoute
+  ApprovalsRoute: typeof ApprovalsRoute
+  AssetsRoute: typeof AssetsRoute
+  AuditRoute: typeof AuditRoute
+  BrandsRoute: typeof BrandsRoute
+  CalendarRoute: typeof CalendarRoute
+  IntegrationsRoute: typeof IntegrationsRoute
+  JobsRoute: typeof JobsRoute
+  NotificationsRoute: typeof NotificationsRoute
+  ProfileRoute: typeof ProfileRoute
+  PublishingRoute: typeof PublishingRoute
   CampaignsIdRoute: typeof CampaignsIdRoute
   ContentIdRoute: typeof ContentIdRoute
+  LeadsIdRoute: typeof LeadsIdRoute
+  VideosIdRoute: typeof VideosIdRoute
   CampaignsIndexRoute: typeof CampaignsIndexRoute
   ContentIndexRoute: typeof ContentIndexRoute
+  LeadsIndexRoute: typeof LeadsIndexRoute
+  VideosIndexRoute: typeof VideosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -93,6 +297,83 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-models': {
+      id: '/ai-models'
+      path: '/ai-models'
+      fullPath: '/ai-models'
+      preLoaderRoute: typeof AiModelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/approvals': {
+      id: '/approvals'
+      path: '/approvals'
+      fullPath: '/approvals'
+      preLoaderRoute: typeof ApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assets': {
+      id: '/assets'
+      path: '/assets'
+      fullPath: '/assets'
+      preLoaderRoute: typeof AssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brands': {
+      id: '/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof BrandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jobs': {
+      id: '/jobs'
+      path: '/jobs'
+      fullPath: '/jobs'
+      preLoaderRoute: typeof JobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publishing': {
+      id: '/publishing'
+      path: '/publishing'
+      fullPath: '/publishing'
+      preLoaderRoute: typeof PublishingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/campaigns/': {
@@ -123,15 +404,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContentIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leads/': {
+      id: '/leads/'
+      path: '/leads'
+      fullPath: '/leads/'
+      preLoaderRoute: typeof LeadsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leads/$id': {
+      id: '/leads/$id'
+      path: '/leads/$id'
+      fullPath: '/leads/$id'
+      preLoaderRoute: typeof LeadsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos/': {
+      id: '/videos/'
+      path: '/videos'
+      fullPath: '/videos/'
+      preLoaderRoute: typeof VideosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos/$id': {
+      id: '/videos/$id'
+      path: '/videos/$id'
+      fullPath: '/videos/$id'
+      preLoaderRoute: typeof VideosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiModelsRoute: AiModelsRoute,
+  ApprovalsRoute: ApprovalsRoute,
+  AssetsRoute: AssetsRoute,
+  AuditRoute: AuditRoute,
+  BrandsRoute: BrandsRoute,
+  CalendarRoute: CalendarRoute,
+  IntegrationsRoute: IntegrationsRoute,
+  JobsRoute: JobsRoute,
+  NotificationsRoute: NotificationsRoute,
+  ProfileRoute: ProfileRoute,
+  PublishingRoute: PublishingRoute,
   CampaignsIdRoute: CampaignsIdRoute,
   ContentIdRoute: ContentIdRoute,
+  LeadsIdRoute: LeadsIdRoute,
+  VideosIdRoute: VideosIdRoute,
   CampaignsIndexRoute: CampaignsIndexRoute,
   ContentIndexRoute: ContentIndexRoute,
+  LeadsIndexRoute: LeadsIndexRoute,
+  VideosIndexRoute: VideosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
