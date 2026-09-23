@@ -201,6 +201,14 @@
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
 }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 @utility ai-border {
   background: linear-gradient(var(--color-card), var(--color-card)) padding-box,
     linear-gradient(90deg, oklch(0.72 0.16 55), oklch(0.66 0.17 20), oklch(0.62 0.12 170), oklch(0.72 0.16 55)) border-box;
