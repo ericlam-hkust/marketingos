@@ -60,7 +60,7 @@ function LeadScore({ score }: { score: number }) {
   const t = useT();
   const meta = scoreMeta(score);
   return <div className="w-full" aria-label={`${t("潛在客戶評分", "Lead score", "潜在客户评分")} ${score} / 100`}>
-    <div className="mb-1.5 flex items-center justify-between gap-3"><span className="font-display text-sm font-bold tabular-nums">{score}</span><span className={`flex items-center gap-1 text-[10px] font-semibold ${meta.text}`}><meta.Icon className="size-3" />{t(...meta.label)}</span></div>
+    <div className="mb-1.5 flex items-center justify-between gap-3"><span className="font-display text-sm font-bold tabular-nums">{score}</span><span className={`flex items-center gap-1 text-[10px] font-semibold ${meta.text}`}><meta.Icon className="size-3" />{t(meta.label[0], meta.label[1], meta.label[2])}</span></div>
     <div className="h-2 overflow-hidden rounded-full bg-muted"><div className={`h-full rounded-full transition-all duration-700 ${meta.tone}`} style={{ width: `${score}%` }} /></div>
   </div>;
 }
