@@ -23,10 +23,10 @@ function Leads() {
           <Card key={i} className="p-3.5"><p className="text-xs text-muted-foreground">{tri(lang, f.stage as [string, string, string])}</p><p className="font-display text-2xl font-bold tabular-nums">{f.value}</p></Card>
         ))}
       </div>
-      <div className="grid gap-3 md:hidden">
+      <div className="grid gap-3 lg:hidden">
         {leads.map((lead) => <MobileLeadCard key={lead.id} lead={lead} />)}
       </div>
-      <Card className="hidden overflow-x-auto md:block">
+      <Card className="hidden overflow-x-auto lg:block">
         <table className="w-full text-[13px]">
           <thead className="bg-surface-2 text-left text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
             <tr>{[t("姓名", "Name", "姓名"), t("公司", "Company", "公司"), t("來源", "Source", "来源"), t("同意", "Consent", "同意"), t("評分", "Score", "评分"), t("狀態", "Status", "状态"), t("負責人", "Owner", "负责人")].map((h) => <th key={h} className="px-4 py-2.5">{h}</th>)}</tr>
