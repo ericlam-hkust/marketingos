@@ -138,7 +138,7 @@ function Teleprompter({ onClose }: { onClose: () => void }) {
       el.scrollTop += speed / 20;
       const nodes = Array.from(el.querySelectorAll("[data-scene]")) as HTMLElement[];
       const line = el.scrollTop + el.clientHeight * 0.4;
-      const cur = nodes.findLastIndex((n) => n.offsetTop <= line);
+      let cur = -1; nodes.forEach((n, k) => { if (n.offsetTop <= line) cur = k; });
       if (cur >= 0) setScene(cur);
     }, 50);
     return () => clearInterval(iv);
