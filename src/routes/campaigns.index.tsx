@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { LayoutGrid, List, Plus, Search, Sparkles, Check, Loader2, AlertTriangle } from "lucide-react";
+import { LayoutGrid, List, Plus, Search, Sparkles, Check, Loader2, AlertTriangle, Pencil, Target, Users, MessageSquareText, Radio, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { useApp, useT } from "@/lib/app-state";
 import { campaigns } from "@/lib/mock-data";
@@ -103,37 +103,72 @@ function Wizard({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boole
   const [objective, setObjective] = useState("consultation");
   const [channels, setChannels] = useState<string[]>(["linkedin", "email"]);
   const [gen, setGen] = useState<"idle" | "loading" | "done">("idle");
+  const [generatedSections, setGeneratedSections] = useState(0);
   const steps = [t("目標", "Objective", "目标"), t("受眾", "Audience", "受众"), t("優惠及訊息", "Offer & message", "优惠及信息"), t("渠道", "Channels", "渠道"), t("AI 計劃", "AI plan", "AI 计划")];
+  const stepIcons = [Target, Users, MessageSquareText, Radio, Sparkles];
   const objectives = [
     ["awareness", t("品牌知名度", "Awareness", "品牌知名度")], ["traffic", t("網站流量", "Traffic", "网站流量")], ["leads", t("潛在客戶", "Lead generation", "潜在客户")],
     ["consultation", t("預約諮詢", "Consultation booking", "预约咨询")], ["event", t("活動報名", "Event registration", "活动报名")], ["retention", t("客戶留存", "Retention", "客户留存")], ["recruit", t("招聘", "Recruitment", "招聘")],
   ];
   const field = "w-full rounded-lg border bg-card px-3 py-2 text-[13px] outline-none focus:border-ring";
   const next = () => {
-    if (step === 3) { setStep(4); setGen("loading"); setTimeout(() => setGen("done"), 1800); return; }
-    if (step === 4) { onOpenChange(false); setStep(0); setGen("idle"); toast.success(t("已建立草稿活動", "Draft campaign created", "已建立草稿活动")); return; }
+    if (step === 3) {
+      setStep(4);
+      setGen("loading");
+      setGeneratedSections(0);
+      [1, 2, 3, 4, 5, 6].forEach((count, index) => {
+        window.setTimeout(() => {
+          setGeneratedSections(count);
+          if (count === 6) setGen("done");
+        }, 350 + index * 260);
+      });
+      return;
+    }
+    if (step === 4) { closeWizard(); toast.success(t("已建立草稿活動", "Draft campaign created", "已建立草稿活动")); return; }
     setStep(step + 1);
   };
+  const closeWizard = () => {
+    onOpenChange(false);
+    window.setTimeout(() => {
+      setStep(0);
+      setGen("idle");
+      setGeneratedSections(0);
+    }, 200);
+  };
+  const objectiveLabel = objectives.find(([key]) => key === objective)?.[1] ?? objectives[0][1];
+  const plan = [
+    [t("定位", "Positioning", "定位"), "務實本地嘅 AI 工作流程夥伴——唔講大話，只講慳返幾多鐘。"],
+    [t("內容支柱", "Content pillars", "内容支柱"), "① 隱藏成本 ② 真實案例 ③ 4 星期方法 ④ 創辦人觀點"],
+    [t("素材計劃", "Asset plan", "素材计划"), "8 個 LinkedIn 帖文、4 個輪播、2 段主持人影片、3 封電子報"],
+    ["KPI", "80 個預約 · 著陸頁轉化 5% · 150 MQL"],
+    [t("風險", "Risks", "风险"), "客戶案例需書面同意；避免「保證」字眼。"],
+    [t("實驗", "Experiments", "实验"), "A/B：痛點開頭 vs 數據開頭；12:30 vs 09:30 發佈"],
+  ];
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl gap-0 p-0">
+    <Dialog open={open} onOpenChange={(value) => value ? onOpenChange(true) : closeWizard()}>
+      <DialogContent className="max-h-[90vh] max-w-3xl gap-0 overflow-hidden p-0">
         <div className="border-b p-5">
           <DialogTitle className="flex items-center gap-2 font-display text-lg font-bold">{t("建立新活動", "Create campaign", "建立新活动")}<AiBadge>{t("AI 輔助", "AI-assisted", "AI 辅助")}</AiBadge></DialogTitle>
-          <div className="mt-4 flex items-center gap-1">
+          <p className="mt-1 text-xs text-muted-foreground">{t("用幾個關鍵決定建立完整、可編輯嘅活動計劃。", "Turn a few key decisions into a complete, editable campaign plan.", "用几个关键决定建立完整、可编辑的活动计划。")}</p>
+          <div className="mt-5 flex items-start gap-1" aria-label={t("建立進度", "Creation progress", "建立进度")}>
             {steps.map((s, i) => (
-              <div key={s} className="flex flex-1 items-center gap-1.5">
-                <span className={cn("grid size-6 shrink-0 place-items-center rounded-full text-[11px] font-bold transition", i < step ? "bg-primary text-primary-foreground" : i === step ? "bg-primary/15 text-primary ring-2 ring-primary" : "bg-muted text-muted-foreground")}>{i < step ? <Check className="size-3.5" /> : i + 1}</span>
-                <span className={cn("hidden truncate text-[11px] font-medium sm:block", i === step ? "text-foreground" : "text-muted-foreground")}>{s}</span>
-                {i < steps.length - 1 && <span className={cn("h-px flex-1", i < step ? "bg-primary" : "bg-border")} />}
+              <div key={s} className="flex flex-1 items-start gap-1.5">
+                <button type="button" onClick={() => i < step && setStep(i)} disabled={i > step || gen === "loading"} aria-current={i === step ? "step" : undefined} aria-label={`${i + 1}. ${s}`} className={cn("grid size-8 shrink-0 place-items-center rounded-full text-[11px] font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", i < step ? "bg-primary text-primary-foreground" : i === step ? "bg-primary/15 text-primary ring-2 ring-primary" : "bg-muted text-muted-foreground")}>{i < step ? <Check className="size-4" /> : (() => { const Icon = stepIcons[i]; return <Icon className="size-3.5" />; })()}</button>
+                <span className={cn("hidden pt-1.5 text-[11px] sm:block", i === step ? "font-bold text-foreground" : "font-medium text-muted-foreground")}>{s}</span>
+                {i < steps.length - 1 && <span className={cn("mt-4 h-px flex-1", i < step ? "bg-primary" : "bg-border")} />}
               </div>
             ))}
           </div>
         </div>
-        <div className="min-h-[300px] p-5">
+        <div className="min-h-[340px] overflow-y-auto p-5">
+          <div className="mb-4 flex items-center justify-between">
+            <div><p className="text-[11px] font-semibold uppercase text-muted-foreground">{t(`第 ${step + 1} 步，共 5 步`, `Step ${step + 1} of 5`, `第 ${step + 1} 步，共 5 步`)}</p><h2 className="mt-0.5 font-display text-base font-bold">{steps[step]}</h2></div>
+            {step < 4 && <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-muted-foreground">{objectiveLabel}</span>}
+          </div>
           {step === 0 && (
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {objectives.map(([k, l]) => (
-                <button key={k} onClick={() => setObjective(k)} className={cn("rounded-xl border p-3 text-left text-[13px] font-medium transition", objective === k ? "border-primary bg-primary/5 ring-1 ring-primary" : "hover:bg-secondary")}>{l}</button>
+                <Button key={k} type="button" variant="outline" onClick={() => setObjective(k)} className={cn("h-auto min-h-16 justify-between whitespace-normal rounded-lg p-3 text-left text-[13px]", objective === k ? "border-primary bg-primary/5 text-primary ring-1 ring-primary" : "hover:bg-secondary")}><span>{l}</span>{objective === k && <Check className="size-4" />}</Button>
               ))}
             </div>
           )}
@@ -157,10 +192,10 @@ function Wizard({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boole
               {(["linkedin", "facebook", "instagram", "email", "web"] as const).map((ch) => {
                 const on = channels.includes(ch);
                 return (
-                  <button key={ch} onClick={() => setChannels(on ? channels.filter((x) => x !== ch) : [...channels, ch])} className={cn("flex items-center gap-2.5 rounded-xl border p-3 text-[13px] font-medium transition", on ? "border-primary bg-primary/5 ring-1 ring-primary" : "hover:bg-secondary")}>
+                  <Button key={ch} type="button" variant="outline" onClick={() => setChannels(on ? channels.filter((x) => x !== ch) : [...channels, ch])} className={cn("h-auto min-h-14 justify-start rounded-lg p-3 text-[13px]", on ? "border-primary bg-primary/5 ring-1 ring-primary" : "hover:bg-secondary")}>
                     <ChannelIcon channel={ch} />{ch === "web" ? "Website" : ch[0].toUpperCase() + ch.slice(1)}
                     {on && <Check className="ml-auto size-4 text-primary" />}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
@@ -169,29 +204,27 @@ function Wizard({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boole
             <div className="flex h-[260px] flex-col items-center justify-center gap-3 text-center">
               <span className="grid size-12 place-items-center rounded-full bg-gradient-ai text-ai-foreground shadow-glow"><Loader2 className="size-6 animate-spin" /></span>
               <p className="font-semibold">{t("正在根據品牌 DNA 生成活動計劃…", "Generating plan from brand DNA…", "正在根据品牌 DNA 生成活动计划…")}</p>
-              <p className="text-xs text-muted-foreground">{t("定位 · 內容支柱 · 素材計劃 · 日曆 · KPI · 風險", "Positioning · pillars · assets · calendar · KPIs · risks", "定位 · 内容支柱 · 素材计划 · 日历 · KPI · 风险")}</p>
+              <div className="w-full max-w-sm space-y-2 text-left">
+                {plan.map(([label], index) => <div key={label} className="flex items-center gap-2 text-xs"><span className={cn("grid size-4 place-items-center rounded-full", index < generatedSections ? "bg-success/15 text-success" : "bg-muted text-muted-foreground")}>{index < generatedSections ? <Check className="size-3" /> : <Loader2 className={cn("size-3", index === generatedSections && "animate-spin")} />}</span><span className={index < generatedSections ? "text-foreground" : "text-muted-foreground"}>{label}</span></div>)}
+              </div>
             </div>
           ) : (
-            <div className="grid gap-3 animate-in fade-in duration-500 sm:grid-cols-2">
-              {[
-                [t("定位", "Positioning", "定位"), "務實本地嘅 AI 工作流程夥伴——唔講大話，只講慳返幾多鐘。"],
-                [t("內容支柱", "Content pillars", "内容支柱"), "① 隱藏成本 ② 真實案例 ③ 4 星期方法 ④ 創辦人觀點"],
-                [t("素材計劃", "Asset plan", "素材计划"), "8 個 LinkedIn 帖文、4 個輪播、2 段主持人影片、3 封電子報"],
-                ["KPI", "80 個預約 · 著陸頁轉化 5% · 150 MQL"],
-                [t("風險", "Risks", "风险"), "客戶案例需書面同意；避免「保證」字眼。"],
-                [t("實驗", "Experiments", "实验"), "A/B：痛點開頭 vs 數據開頭；12:30 vs 09:30 發佈"],
-              ].map(([l, v]) => (
-                <div key={l} className="rounded-xl border bg-surface-2/60 p-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">{l}</p>
-                  <p contentEditable suppressContentEditableWarning className="mt-1 text-[13px] leading-relaxed outline-none">{v}</p>
+            <div className="animate-in fade-in duration-500">
+              <div className="mb-3 flex flex-wrap items-center gap-2 rounded-lg border border-success/25 bg-success/5 p-3 text-xs"><ShieldCheck className="size-4 text-success" /><span className="font-semibold">{t("品牌及合規檢查已完成", "Brand and compliance checks passed", "品牌及合规检查已完成")}</span><span className="text-muted-foreground">· {objectiveLabel} · {channels.length} {t("個渠道", "channels", "个渠道")}</span></div>
+              <div className="grid gap-3 sm:grid-cols-2">
+              {plan.map(([l, v]) => (
+                <div key={l} className="group rounded-lg border bg-surface-2/60 p-3 transition hover:border-primary/30">
+                  <div className="flex items-center justify-between"><p className="text-[11px] font-semibold uppercase text-primary">{l}</p><Pencil className="size-3 text-muted-foreground opacity-0 transition group-hover:opacity-100" /></div>
+                  <p contentEditable suppressContentEditableWarning aria-label={`${l} ${t("可編輯", "editable", "可编辑")}`} className="mt-1 rounded-sm text-[13px] leading-relaxed outline-none focus:bg-card focus:ring-2 focus:ring-ring/20">{v}</p>
                 </div>
               ))}
+              </div>
             </div>
           ))}
         </div>
         <div className="flex items-center justify-between border-t p-4">
-          <Button variant="ghost" onClick={() => (step === 0 ? onOpenChange(false) : setStep(step - 1))}>{step === 0 ? t("取消", "Cancel", "取消") : t("上一步", "Back", "上一步")}</Button>
-          <Button onClick={next} disabled={gen === "loading"}>
+          <Button variant="ghost" onClick={() => (step === 0 ? closeWizard() : setStep(step - 1))} disabled={gen === "loading"}>{step === 0 ? t("取消", "Cancel", "取消") : t("上一步", "Back", "上一步")}</Button>
+          <Button onClick={next} disabled={gen === "loading" || (step === 3 && channels.length === 0)}>
             {step === 3 ? <><Sparkles className="size-4" />{t("生成 AI 計劃", "Generate AI plan", "生成 AI 计划")}</> : step === 4 ? t("建立草稿活動", "Create draft campaign", "建立草稿活动") : t("下一步", "Next", "下一步")}
           </Button>
         </div>

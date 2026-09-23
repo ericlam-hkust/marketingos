@@ -7,6 +7,7 @@ import { useApp, useT, tri } from "@/lib/app-state";
 import { campaigns, funnel, performance, publishQueue, people } from "@/lib/mock-data";
 import { AiBadge, Avatar, Bar, Card, CardHeader, ChannelIcon, Pill, Ring, StatusPill, Stat, pageHead } from "@/components/mos/ui";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => pageHead("總覽 Dashboard", "Campaign health, approvals, publishing queue, lead funnel and AI recommendations at a glance."),
@@ -112,18 +113,19 @@ function Dashboard() {
           <CardHeader icon={<TrendingUp className="size-4" />} title={t("表現摘要", "Performance summary", "表现摘要")}
             sub={<span className="flex items-center gap-2"><span className="size-1.5 rounded-full bg-success" />LinkedIn 5 {t("分鐘前", "min ago", "分钟前")} · Meta 12 {t("分鐘前", "min ago", "分钟前")} · GA {t("1 小時前", "1 h ago", "1 小时前")}</span>}
             action={
-              <div className="flex rounded-lg border p-0.5 text-[11px] font-medium">
+              <div className="flex rounded-lg border p-0.5 text-[11px] font-medium" aria-label={t("圖表時段", "Chart period", "图表时段")}>
                 {(["7", "14"] as const).map((p) => (
-                  <button key={p} onClick={() => setPeriod(p)} className={cn("rounded-md px-2 py-1", period === p ? "bg-secondary text-foreground" : "text-muted-foreground")}>{p}{t("日", "d", "日")}</button>
+                  <Button key={p} type="button" variant="ghost" size="sm" aria-pressed={period === p} onClick={() => setPeriod(p)} className={cn("h-7 px-2 text-[11px]", period === p ? "bg-secondary text-foreground" : "text-muted-foreground")}>{p}{t("日", "d", "日")}</Button>
                 ))}
               </div>
             } />
-          <div className="grid grid-cols-4 gap-4 px-5 pb-2">
+          <div className="grid grid-cols-2 gap-4 px-5 pb-2 sm:grid-cols-4">
             <Stat label={t("觸及", "Reach", "触及")} value={(data.reduce((s, d) => s + d.reach, 0) / 1000).toFixed(0) + "K"} />
             <Stat label={t("互動", "Engagement", "互动")} value={(data.reduce((s, d) => s + d.engagement, 0) / 1000).toFixed(1) + "K"} />
             <Stat label={t("點擊", "Clicks", "点击")} value={data.reduce((s, d) => s + d.clicks, 0).toLocaleString()} />
             <Stat label={t("潛在客戶", "Leads", "潜在客户")} value={String(data.reduce((s, d) => s + d.leads, 0))} />
           </div>
+          <div className="flex items-center gap-4 px-5 pt-2 text-[11px] text-muted-foreground"><span className="flex items-center gap-1.5"><span className="h-0.5 w-5 bg-chart-1" />{t("觸及（左軸）", "Reach (left axis)", "触及（左轴）")}</span><span className="flex items-center gap-1.5"><span className="h-0.5 w-5 bg-chart-2" />{t("點擊（右軸）", "Clicks (right axis)", "点击（右轴）")}</span></div>
           <div className="h-56 px-2 pb-3">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data} margin={{ left: 0, right: 12, top: 10 }}>
@@ -134,8 +136,8 @@ function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                 <XAxis dataKey="d" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} />
                 <YAxis yAxisId="l" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} width={40} tickFormatter={(v) => `${v / 1000}K`} />
-                <YAxis yAxisId="r" orientation="right" hide />
-                <Tooltip contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 10, fontSize: 12 }} />
+                <YAxis yAxisId="r" orientation="right" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} width={36} />
+                <Tooltip contentStyle={{ background: "var(--popover)", color: "var(--popover-foreground)", border: "1px solid var(--border)", borderRadius: 8, fontSize: 12, boxShadow: "var(--shadow-card)" }} cursor={{ stroke: "var(--muted-foreground)", strokeDasharray: "3 3" }} />
                 <Area yAxisId="l" type="monotone" dataKey="reach" stroke="var(--chart-1)" strokeWidth={2} fill="url(#gReach)" name={t("觸及", "Reach", "触及")} />
                 <Area yAxisId="r" type="monotone" dataKey="clicks" stroke="var(--chart-2)" strokeWidth={2} fill="url(#gClicks)" name={t("點擊", "Clicks", "点击")} />
               </AreaChart>
@@ -152,10 +154,11 @@ function Dashboard() {
               const w = (f.value / funnel[0].value) * 100;
               return (
                 <div key={i}>
-                  <div className="mb-1 flex justify-between text-[12px]"><span className="font-medium">{tri(lang, f.stage as [string, string, string])}</span><span className="tabular-nums text-muted-foreground">{f.value}{i > 0 && <span className="ml-1.5 text-[10px]">({Math.round((f.value / funnel[i - 1].value) * 100)}%)</span>}</span></div>
+                  <div className="mb-1 flex justify-between text-[12px]"><span className="font-medium">{tri(lang, f.stage as [string, string, string])}</span><span className="tabular-nums text-muted-foreground">{f.value}{i > 0 && <span className="ml-1.5 text-[10px]">{Math.round((f.value / funnel[i - 1].value) * 100)}% {t("轉化", "conversion", "转化")}</span>}</span></div>
                   <div className="h-7 overflow-hidden rounded-md bg-muted">
                     <div className="h-full rounded-md transition-all duration-700" style={{ width: `${Math.max(w, 6)}%`, background: `color-mix(in oklab, var(--primary) ${100 - i * 14}%, var(--ai))` }} />
                   </div>
+                  {i < funnel.length - 1 && <p className="mt-1 text-right text-[10px] text-muted-foreground">↓ {Math.round((1 - funnel[i + 1].value / f.value) * 100)}% {t("流失", "drop-off", "流失")}</p>}
                 </div>
               );
             })}
